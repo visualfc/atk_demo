@@ -82,13 +82,18 @@ tk.NewActionGroup //radio action group
 `)
 		btn := tk.NewButton(mw, "Quit")
 		btn.OnCommand(func() {
-			mw.Destroy()
+			//tk.Quit()
+			tk.PopupMenu(file, mw.Pos().X, mw.Pos().Y)
 		})
 		vpk := tk.NewVPackLayout(mw)
 		vpk.SetBorderWidth(10)
 		vpk.AddWidget(tk.NewLayoutSpacer(mw, 0, true))
 		vpk.AddWidget(btn)
 		vpk.InsertWidget(0, info)
+
+		ma := tk.NewMenuRole(mbar, "system")
+		mbar.AddSubMenu("apple", ma)
+		ma.AddAction(tk.NewAction("OK", nil))
 
 		mw.SetTitle("Menu Demo")
 		mw.Center()

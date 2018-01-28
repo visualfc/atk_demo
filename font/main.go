@@ -95,9 +95,9 @@ func main() {
 		vpk.AddLayoutEx(hpk2, tk.FillNone, false, tk.AnchorWest)
 
 		onResize = func() {
-			width := font.MeasureTextWidth(info.Text())
+			width := font.MeasureTextWidth(info.Text()) + vpk.BorderWidth()*2
 			if width > mw.Width() {
-				mw.SetWidth(width + 20)
+				mw.SetWidth(width)
 			} else if width < 400 {
 				mw.SetWidth(400)
 			}
