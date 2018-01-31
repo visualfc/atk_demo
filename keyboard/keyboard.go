@@ -28,7 +28,7 @@ func NewWindow() *Window {
 	win.BindEvent(event.Motion, win.OnMotion)
 	win.BindEvent(event.ButtonPress, win.OnButtonClick)
 	win.BindEvent("<Double-ButtonPress>", win.OnButtonDbclick)
-	win.SetTitle("Keyboard")
+
 	return win
 }
 
@@ -52,6 +52,7 @@ func (w *Window) OnButtonDbclick(e *tk.Event) {
 func main() {
 	tk.MainLoop(func() {
 		mw := NewWindow()
+		mw.SetTitle("ATK Keyboard Demo")
 		mw.SetSizeN(400, 300)
 		mw.Center()
 		mw.ShowNormal()

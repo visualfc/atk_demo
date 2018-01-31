@@ -108,6 +108,7 @@ func NewWindow() *Window {
 func main() {
 	tk.MainLoop(func() {
 		w := NewWindow()
+		w.SetTitle("ATK Button Demo")
 		w.Center()
 		w.ResizeN(400, 300)
 		w.ShowNormal()
