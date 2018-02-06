@@ -14,22 +14,22 @@ type Window struct {
 }
 
 func NewWindow() *Window {
-	w := tk.MainWindow()
-	key := tk.NewLabel(w, "keyboard")
-	pos := tk.NewLabel(w, "pos")
-	key.SetFont(tk.NewUserFont("", 24))
+	mw := &Window{}
+	mw.Window = tk.MainWindow()
+	mw.keyLabel = tk.NewLabel(mw, "keyboard")
+	mw.posLabel = tk.NewLabel(mw, "pos")
+	mw.keyLabel.SetFont(tk.NewUserFont("", 24))
 
-	vpk := tk.NewVPackLayout(w)
-	vpk.AddWidget(key, tk.PackAttrFillBoth(), tk.PackAttrExpand(true))
-	vpk.AddWidget(pos, tk.PackAttrAnchor(tk.AnchorSouthEast))
+	vpk := tk.NewVPackLayout(mw)
+	vpk.AddWidget(mw.keyLabel, tk.PackAttrFillBoth(), tk.PackAttrExpand(true))
+	vpk.AddWidget(mw.posLabel, tk.PackAttrAnchor(tk.AnchorSouthEast))
 
-	win := &Window{w, key, pos}
-	win.BindKeyEvent(win.OnKeyEvent)
-	win.BindEvent(event.Motion, win.OnMotion)
-	win.BindEvent(event.ButtonPress, win.OnButtonClick)
-	win.BindEvent("<Double-ButtonPress>", win.OnButtonDbclick)
+	mw.BindKeyEvent(mw.OnKeyEvent)
+	mw.BindEvent(event.Motion, mw.OnMotion)
+	mw.BindEvent(event.ButtonPress, mw.OnButtonClick)
+	mw.BindEvent("<Double-ButtonPress>", mw.OnButtonDbclick)
 
-	return win
+	return mw
 }
 
 func (w *Window) OnKeyEvent(e *tk.KeyEvent) {
