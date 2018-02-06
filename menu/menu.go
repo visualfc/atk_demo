@@ -2,15 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/visualfc/atk/tk"
 )
 
 func main() {
-	if tk.Init() != nil {
-		log.Fatalln("load tk false")
-	}
 	tk.MainLoop(func() {
 		mw := tk.MainWindow()
 
@@ -18,18 +14,18 @@ func main() {
 		mw.SetMenu(mbar)
 
 		file := mbar.AddNewSubMenu("File")
-		file.AddAction(tk.NewAction("Open", func() {
+		file.AddAction(tk.NewActionEx("Open", func() {
 			fmt.Println("Open")
 		}))
 		file.AddSeparator()
-		file.AddAction(tk.NewAction("Quit", func() {
+		file.AddAction(tk.NewActionEx("Quit", func() {
 			tk.Quit()
 		}))
 
-		copyAct := tk.NewAction("Copy", func() {
+		copyAct := tk.NewActionEx("Copy", func() {
 			fmt.Println("copy")
 		})
-		pasteAct := tk.NewAction("Paste", func() {
+		pasteAct := tk.NewActionEx("Paste", func() {
 			fmt.Println("paste")
 		})
 		group := tk.NewActionGroup()
@@ -42,12 +38,11 @@ func main() {
 			fmt.Println(group.CheckedActionIndex())
 		})
 
-		boldAct := tk.NewCheckAction("Bold", nil)
+		boldAct := tk.NewCheckAction("Bold")
 		boldAct.OnCommand(func() {
 			fmt.Println("bold", boldAct.IsChecked())
 		})
-		italicAct := tk.NewCheckAction("Italic", nil)
-		fmt.Println(italicAct.IsChecked())
+		italicAct := tk.NewCheckAction("Italic")
 		italicAct.OnCommand(func() {
 			fmt.Println("italic", italicAct.IsChecked())
 		})
@@ -70,20 +65,19 @@ mw.SetMenu(mbar)
 
 //sub menu
 file := mbar.AddNewSubMenu("File")
-file.AddAction(tk.NewAction("Open", func() {
+file.AddAction(tk.NewActionEx("Open", func() {
 	fmt.Println("Open")
 }))
 
 //action
-tk.NewAction
+tk.NewActionEx
 tk.NewCheckAction
 tk.NewActionGroup //radio action group
 
 `)
 		btn := tk.NewButton(mw, "Quit")
 		btn.OnCommand(func() {
-			//tk.Quit()
-			tk.PopupMenu(file, mw.Pos().X, mw.Pos().Y)
+			tk.Quit()
 		})
 		vpk := tk.NewVPackLayout(mw)
 		vpk.SetBorderWidth(10)
@@ -91,13 +85,8 @@ tk.NewActionGroup //radio action group
 		vpk.AddWidget(btn)
 		vpk.InsertWidget(0, info)
 
-		ma := tk.NewMenuRole(mbar, "system")
-		mbar.AddSubMenu("apple", ma)
-		ma.AddAction(tk.NewAction("OK", nil))
-
 		mw.SetTitle("Menu Demo")
 		mw.Center()
 		mw.ShowNormal()
-		fmt.Println(tk.DumpWidget(mw))
 	})
 }
