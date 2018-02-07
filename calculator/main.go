@@ -93,11 +93,7 @@ func NewWindow() *MainWindow {
 	var number [10]*Button
 	for i := 0; i < 10; i++ {
 		text := fmt.Sprintf("%v", i)
-		if i == 0 {
-			number[i] = mw.NewButtonEx(text, 70, 30)
-		} else {
-			number[i] = mw.NewButton(text)
-		}
+		number[i] = mw.NewButton(text)
 		number[i].OnCommand(func() {
 			mw.inputNumber(text)
 		})
@@ -110,7 +106,7 @@ func NewWindow() *MainWindow {
 
 	clear := mw.NewButton("C")
 
-	sig := mw.NewButton("±")
+	sig := mw.NewButton("+/-")
 
 	precent := mw.NewButton("%")
 
@@ -122,13 +118,11 @@ func NewWindow() *MainWindow {
 	equal := mw.NewButton("=")
 
 	grid := tk.NewGridLayout(mw)
-	grid.AddWidgets(clear, sig, precent, division)
+	grid.AddWidgets(clear, nil, precent, division)
 	grid.AddWidgets(number[7], number[8], number[9], multiple)
 	grid.AddWidgets(number[4], number[5], number[6], minus)
 	grid.AddWidgets(number[1], number[2], number[3], plus)
-	grid.AddWidget(number[0], tk.GridAttrColumnSpan(2))
-	grid.AddWidget(decimal, tk.GridAttrRow(4), tk.GridAttrColumn(2))
-	grid.AddWidget(equal, tk.GridAttrRow(4), tk.GridAttrColumn(3))
+	grid.AddWidgets(number[0], sig, decimal, equal)
 
 	hbox := tk.NewHPackLayout(mw)
 	hbox.AddWidget(tk.NewLayoutSpacer(mw, 0, true), tk.PackAttrFillX(), tk.PackAttrExpand(true))
