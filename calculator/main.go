@@ -2,86 +2,124 @@ package main
 
 import (
 	"fmt"
+	"image"
+	"strings"
 
 	"github.com/visualfc/atk/tk"
 )
 
 func main() {
 	tk.MainLoop(func() {
+		tk.SetMainTheme(nil)
 		w := NewWindow()
+		w.SetTitle("Go 计算器")
 		w.Center()
 		w.ShowNormal()
+		w.SetResizable(false, false)
 	})
 }
+
+type Mode int
+
+const (
+	ModeWait Mode = iota
+	ModeCmd
+	ModeNext
+)
 
 type MainWindow struct {
 	*tk.Window
 	edit   *tk.Entry
+	font   *tk.UserFont
 	number string
 }
 
 func (w *MainWindow) inputNumber(s string) {
+	if s == "." && strings.Contains(w.number, ".") {
+		return
+	}
 	w.number += s
 	w.edit.SetText(w.number)
 }
 
-func (w *MainWindow) inputCmd(s string) {
+func (w *MainWindow) inputCmd() {
 
+}
+
+type Button struct {
+	*tk.Button
+}
+
+func (btn *Button) OnCommand(fn func()) {
+	btn.Button.OnCommand(fn)
+}
+
+func (w *MainWindow) NewButton(text string) *Button {
+	return w.NewButtonEx(text, 30, 30)
+}
+
+func (w *MainWindow) NewButtonEx(text string, width int, height int) *Button {
+	blank := image.NewNRGBA(image.Rect(0, 0, width, height))
+	img := tk.NewImage()
+	img.SetImage(blank)
+	btn := &Button{}
+	btn.Button = tk.NewButton(w, text)
+	btn.SetWidth(0)
+	if !tk.HasTheme() {
+		btn.SetWidth(width)
+	}
+	btn.SetImage(img)
+	btn.SetCompound(tk.CompoundCenter)
+	btn.SetAttributes(tk.WidgetAttrFont(w.font), tk.WidgetAttrBorderStyle(tk.BorderStyleGroove))
+	return btn
 }
 
 func NewWindow() *MainWindow {
 	mw := &MainWindow{}
 	mw.Window = tk.MainWindow()
+	mw.font = tk.LoadSysFont(tk.SysTextFont).Clone()
+	mw.font.SetSize(20).SetBold(true)
 
 	mw.edit = tk.NewEntry(mw)
 	mw.edit.SetAlignment(tk.AlignmentRight)
+	mw.edit.SetState(tk.StateReadOnly)
+	mw.edit.SetFont(mw.font)
+	mw.BindEvent("<Key>", func(e *tk.Event) {
+		if e.KeyRune >= '0' && e.KeyRune <= '9' || e.KeyRune == '.' {
+			mw.inputNumber(e.KeyText)
+		}
+	})
 
-	var number [10]*tk.Button
+	var number [10]*Button
 	for i := 0; i < 10; i++ {
 		text := fmt.Sprintf("%v", i)
-		number[i] = tk.NewButton(mw, text)
-		number[i].SetWidth(2)
+		if i == 0 {
+			number[i] = mw.NewButtonEx(text, 70, 30)
+		} else {
+			number[i] = mw.NewButton(text)
+		}
 		number[i].OnCommand(func() {
 			mw.inputNumber(text)
 		})
 	}
-	number[0].SetWidth(8)
 
-	var decimal *tk.Button
-	decimal = tk.NewButton(mw, ".")
-	decimal.SetWidth(2)
+	decimal := mw.NewButton(".")
 	decimal.OnCommand(func() {
 		mw.inputNumber(".")
 	})
 
-	var clear *tk.Button
-	clear = tk.NewButton(mw, "C")
-	clear.SetWidth(2)
+	clear := mw.NewButton("C")
 
-	var sig *tk.Button
-	sig = tk.NewButton(mw, "±")
-	sig.SetWidth(2)
+	sig := mw.NewButton("±")
 
-	var precent *tk.Button
-	precent = tk.NewButton(mw, "%")
-	precent.SetWidth(2)
+	precent := mw.NewButton("%")
 
 	// + - * /
-	var plus *tk.Button
-	var minus *tk.Button
-	var multiple *tk.Button
-	var division *tk.Button
-	var equal *tk.Button
-	plus = tk.NewButton(mw, "+")
-	plus.SetWidth(2)
-	minus = tk.NewButton(mw, "-")
-	minus.SetWidth(2)
-	multiple = tk.NewButton(mw, "×")
-	multiple.SetWidth(2)
-	division = tk.NewButton(mw, "÷")
-	division.SetWidth(2)
-	equal = tk.NewButton(mw, "=")
-	equal.SetWidth(2)
+	plus := mw.NewButton("+")
+	minus := mw.NewButton("-")
+	multiple := mw.NewButton("×")
+	division := mw.NewButton("÷")
+	equal := mw.NewButton("=")
 
 	grid := tk.NewGridLayout(mw)
 	grid.AddWidgets(clear, sig, precent, division)
@@ -97,9 +135,9 @@ func NewWindow() *MainWindow {
 	hbox.AddLayout(grid, tk.PackAttrExpand(false), tk.PackAttrAnchor(tk.AnchorWest))
 
 	vbox := tk.NewVPackLayout(mw)
-	vbox.AddWidget(mw.edit, tk.PackAttrFillX(), tk.PackAttrExpand(true), tk.PackAttrAnchor(tk.AnchorNorth))
-	vbox.AddLayout(hbox, tk.PackAttrFillX(), tk.PackAttrExpand(true), tk.PackAttrAnchor(tk.AnchorNorth))
-	vbox.AddWidget(tk.NewLayoutSpacer(mw, 0, true), tk.PackAttrFillY(), tk.PackAttrExpand(true))
-
+	vbox.AddWidget(mw.edit, tk.PackAttrFillX(), tk.PackAttrExpand(false), tk.PackAttrAnchor(tk.AnchorNorth))
+	vbox.AddLayout(hbox, tk.PackAttrFillX(), tk.PackAttrExpand(false), tk.PackAttrAnchor(tk.AnchorNorth))
+	//vbox.AddWidget(tk.NewLayoutSpacer(mw, 0, true), tk.PackAttrFillY(), tk.PackAttrExpand(true))
+	vbox.Repack()
 	return mw
 }
