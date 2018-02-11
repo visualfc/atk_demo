@@ -126,11 +126,11 @@ func NewWindow() *MainWindow {
 
 	hbox := tk.NewHPackLayout(mw)
 	hbox.AddWidget(tk.NewLayoutSpacer(mw, 0, true), tk.PackAttrFillX(), tk.PackAttrExpand(true))
-	hbox.AddLayout(grid, tk.PackAttrExpand(false), tk.PackAttrAnchor(tk.AnchorWest))
+	hbox.AddWidget(grid, tk.PackAttrExpand(false), tk.PackAttrAnchor(tk.AnchorWest))
 
 	vbox := tk.NewVPackLayout(mw)
 	vbox.AddWidget(mw.edit, tk.PackAttrFillX(), tk.PackAttrExpand(false), tk.PackAttrAnchor(tk.AnchorNorth))
-	vbox.AddLayout(hbox, tk.PackAttrFillX(), tk.PackAttrExpand(false), tk.PackAttrAnchor(tk.AnchorNorth))
+	vbox.AddWidget(hbox, tk.PackAttrFillX(), tk.PackAttrExpand(false), tk.PackAttrAnchor(tk.AnchorNorth))
 	//vbox.AddWidget(tk.NewLayoutSpacer(mw, 0, true), tk.PackAttrFillY(), tk.PackAttrExpand(true))
 	vbox.Repack()
 	return mw

@@ -95,10 +95,10 @@ func NewWindow() *Window {
 	hbox4.AddWidget(mbtn)
 
 	vbox := tk.NewVPackLayout(w)
-	vbox.AddLayout(hbox1)
-	vbox.AddLayout(hbox2)
-	vbox.AddLayout(hbox3)
-	vbox.AddLayout(hbox4)
+	vbox.AddWidget(hbox1)
+	vbox.AddWidget(hbox2)
+	vbox.AddWidget(hbox3)
+	vbox.AddWidget(hbox4)
 
 	vbox.SetBorderWidth(10)
 

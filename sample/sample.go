@@ -1,9 +1,17 @@
 package main
 
-import "github.com/visualfc/atk/tk"
+import (
+	"fmt"
+
+	"github.com/visualfc/atk/tk"
+)
 
 type Window struct {
 	*tk.Window
+}
+
+func (w *Window) LayoutId() string {
+	return w.Id()
 }
 
 func NewWindow() *Window {
@@ -22,5 +30,6 @@ func main() {
 		w.Center()
 		w.ResizeN(300, 200)
 		w.ShowNormal()
+		fmt.Println(tk.DumpWidget(w))
 	})
 }

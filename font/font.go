@@ -92,8 +92,8 @@ func (w *Window) Init() {
 	w.vpk.SetBorderWidth(10)
 	w.vpk.AddWidgetEx(w.info, tk.FillY, true, tk.AnchorCenter)
 	w.vpk.AddWidget(tk.NewLayoutSpacer(w, 0, true))
-	w.vpk.AddLayoutEx(hpk, tk.FillNone, false, tk.AnchorWest)
-	w.vpk.AddLayoutEx(hpk2, tk.FillNone, false, tk.AnchorWest)
+	w.vpk.AddWidgetEx(hpk, tk.FillNone, false, tk.AnchorWest)
+	w.vpk.AddWidgetEx(hpk2, tk.FillNone, false, tk.AnchorWest)
 }
 
 func (w *Window) Resize() {
