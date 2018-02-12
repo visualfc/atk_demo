@@ -28,8 +28,8 @@ func NewWindow() *Window {
 	//	vbox.AddWidget(lst)
 	//split.SetHeight(200).SetWidth(200)
 	//	vbox.AddWidget(split)
-	split.AddWidget(lst, 2)
-	split.AddWidget(tk.NewLabel(mw, "Demo"), 0)
+	split.AddWidget(lst.LayoutWidget(), 2)
+	split.AddWidget(tk.NewLabel(split, "Demo"), 0)
 	//split.AddWidget(tk.NewLabel(split, "Demo"), 0)
 	vbox.AddWidget(split, tk.PackAttrFillBoth(), tk.PackAttrExpand(true))
 	lst.OnSelectionChanged(func() {
