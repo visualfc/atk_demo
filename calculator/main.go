@@ -11,7 +11,6 @@ import (
 
 func main() {
 	tk.MainLoop(func() {
-		//tk.SetMainTheme(nil)
 		w := NewWindow()
 		w.SetTitle("Go 计算器")
 		w.Center()
@@ -20,34 +19,14 @@ func main() {
 	})
 }
 
-type Mode int
-
-const (
-	ModeWait Mode = iota
-	ModeCmd
-	ModeNext
-)
-
 type MainWindow struct {
 	*tk.Window
 	edit       *tk.Entry
+	status     *tk.Label
 	waitNext   bool
 	number     string //数字记录
 	operator   string //运算符 + - × ÷
 	prevNumber float64
-}
-
-func (w *MainWindow) inputNegative() {
-	if w.waitNext {
-		w.waitNext = false
-		w.number = "0"
-	}
-	if strings.HasPrefix(w.number, "-") {
-		w.number = w.number[1:]
-	} else {
-		w.number = "-" + w.number
-	}
-	w.updateText()
 }
 
 func (w *MainWindow) inputNumber(s string) {
@@ -83,6 +62,7 @@ func (w *MainWindow) currentNumber() float64 {
 }
 
 func (w *MainWindow) calculate(operator string) {
+	var divError bool
 	if w.operator == "" {
 		w.prevNumber = w.currentNumber()
 	} else if !w.waitNext {
@@ -94,17 +74,27 @@ func (w *MainWindow) calculate(operator string) {
 		case "×", "*":
 			w.prevNumber *= w.currentNumber()
 		case "÷", "/":
-			w.prevNumber /= w.currentNumber()
+			if w.currentNumber() == 0 {
+				divError = true
+			} else {
+				w.prevNumber /= w.currentNumber()
+			}
 		}
 		w.number = fmt.Sprintf("%v", w.prevNumber)
 	}
 	w.operator = operator
 	w.waitNext = true
+	if divError {
+		w.status.SetText("被除数不能为 0 !")
+	} else if operator == "=" {
+		w.status.SetText(fmt.Sprintf("%v", w.prevNumber))
+	} else {
+		w.status.SetText(fmt.Sprintf("%v %v", w.prevNumber, w.operator))
+	}
 	w.updateText()
 }
 
 func (w *MainWindow) inputSymbol(s string) {
-	fmt.Println(s)
 	switch s {
 	case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".":
 		w.inputNumber(s)
@@ -113,15 +103,28 @@ func (w *MainWindow) inputSymbol(s string) {
 		w.waitNext = false
 		w.updateText()
 	case "+/-":
-		w.inputNegative()
+		if w.currentNumber() != 0 {
+			w.number = fmt.Sprintf("%v", -1*w.currentNumber())
+			w.waitNext = false
+			w.updateText()
+		}
+	case "%":
+		if w.currentNumber() != 0 {
+			w.number = fmt.Sprintf("%v", w.currentNumber()/100)
+			w.waitNext = false
+			w.updateText()
+		}
 	case "C", "c": //清除
 		w.number = "0"
+		w.operator = ""
+		w.waitNext = true
 		w.updateText()
 	case "+", "-", "×", "÷", "*", "/":
 		w.calculate(s)
 	case "=":
-		w.calculate(w.operator)
+		w.calculate("=")
 		w.operator = ""
+		w.waitNext = true
 	}
 }
 
@@ -139,13 +142,14 @@ func NewWindow() *MainWindow {
 	mw.Window = tk.MainWindow()
 
 	font := tk.LoadSysFont(tk.SysTextFont).Clone()
-	font.SetSize(20).SetBold(true)
+	font.SetSize(24).SetBold(true)
 
 	mw.edit = tk.NewEntry(mw)
 	mw.edit.SetAlignment(tk.AlignmentRight)
 	mw.edit.SetFont(font)
 	mw.edit.SetState(tk.StateReadOnly)
 	mw.edit.SetText("0")
+	mw.status = tk.NewLabel(mw, "")
 	mw.number = "0"
 
 	mw.BindEvent("<Key>", func(e *tk.Event) {
@@ -172,8 +176,8 @@ func NewWindow() *MainWindow {
 
 	vbox := tk.NewVPackLayout(mw)
 	vbox.SetBorderWidth(4)
+	vbox.AddWidgetEx(mw.status, tk.FillX, false, tk.AnchorWest)
 	vbox.AddWidgetEx(mw.edit, tk.FillX, false, 0)
 	vbox.AddWidgetEx(grid, tk.FillBoth, true, 0)
-
 	return mw
 }
