@@ -110,6 +110,7 @@ func (w *MainWindow) inputSymbol(s string) {
 		w.inputNumber(s)
 	case "π":
 		w.number = fmt.Sprintf("%v", math.Pi)
+		w.waitNext = false
 		w.updateText()
 	case "+/-":
 		w.inputNegative()
@@ -158,6 +159,7 @@ func NewWindow() *MainWindow {
 	grid := tk.NewGridLayout(mw)
 	for n, sym := range symbols {
 		btn := tk.NewButton(mw, sym)
+		btn.SetWidth(5)
 		btn.OnCommand(func() {
 			mw.inputSymbol(btn.Text())
 		})
