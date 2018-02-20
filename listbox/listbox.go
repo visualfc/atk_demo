@@ -10,10 +10,40 @@ type Window struct {
 	*tk.Window
 }
 
+type Base struct {
+	id string
+}
+
+func (b *Base) Id() string {
+	return b.id
+}
+
+type M1 struct {
+	Base
+}
+
+type M2 struct {
+	Base
+}
+
+func (m *M2) Id() string {
+	return m.id
+}
+
+type My struct {
+	*M1
+	*M2
+}
+
 func NewWindow() *Window {
+
+	m := &My{&M1{Base{"m1"}}, &M2{Base{"m2"}}}
+	fmt.Println(m.Id())
+
 	mw := tk.MainWindow()
 
-	split := tk.NewSplitter(mw, tk.Vertical) //, tk.WidgetAttrInitUseTheme(false))
+	//	paned := tk.NewPaned(mw, tk.Vertical)
+	//, tk.WidgetAttrInitUseTheme(false))
 	lst := tk.NewListBoxEx(mw)
 	//lst.ShowXScrollBar(false)
 
@@ -24,14 +54,17 @@ func NewWindow() *Window {
 	lst.SetItems(items)
 
 	vbox := tk.NewVPackLayout(mw)
-	//	vbox.AddWidget(tk.NewLabel(mw, "ListBox Demo"))
-	//	vbox.AddWidget(lst)
+	vbox.AddWidget(tk.NewLabel(mw, "ListBox Demo"))
+	vbox.AddWidget(lst)
 	//split.SetHeight(200).SetWidth(200)
 	//	vbox.AddWidget(split)
-	split.AddWidget(lst.LayoutWidget(), 2)
-	split.AddWidget(tk.NewLabel(split, "Demo"), 0)
+	//	paned.AddWidget(lst, 0)
+	//	paned.AddWidget(tk.NewLabel(paned, "Demo"), 0)
+	//	paned.InsertWidget(0, tk.NewLabel(paned, "Test"), 0)
+	//	paned.RemovePane(2)
+	//fmt.Println(tk.MainInterp().EvalAsString(fmt.Sprintf("%v sashpos 1 0", split.Id())))
 	//split.AddWidget(tk.NewLabel(split, "Demo"), 0)
-	vbox.AddWidget(split, tk.PackAttrFillBoth(), tk.PackAttrExpand(true))
+	//vbox.AddWidget(paned, tk.PackAttrFillBoth(), tk.PackAttrExpand(true))
 	lst.OnSelectionChanged(func() {
 		fmt.Println(lst.SelectedItems())
 	})
