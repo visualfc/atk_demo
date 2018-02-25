@@ -145,7 +145,7 @@ func NewWindow() *MainWindow {
 	font.SetSize(24).SetBold(true)
 
 	mw.edit = tk.NewEntry(mw)
-	mw.edit.SetAlignment(tk.AlignmentRight)
+	mw.edit.SetJustify(tk.JustifyRight)
 	mw.edit.SetFont(font)
 	mw.edit.SetState(tk.StateReadOnly)
 	mw.edit.SetText("0")

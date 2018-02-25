@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"math"
 	"strings"
 
 	"github.com/visualfc/atk/tk"
@@ -94,11 +96,41 @@ func NewWindow() *Window {
 	hbox4 := tk.NewHPackLayout(w)
 	hbox4.AddWidget(mbtn)
 
+	hbox5 := tk.NewHPackLayout(w)
+	spin := tk.NewSpinBox(w)
+	spinInfo := tk.NewLabel(w, "")
+	spin.SetFrom(0)
+	spin.SetTo(100)
+	spin.Entry().SetWidth(5)
+
+	spin.OnCommand(func() {
+		spinInfo.SetText(spin.TextValue())
+	})
+
+	scale := tk.NewScale(w, tk.Horizontal)
+	scale.SetFrom(0)
+	scale.SetTo(100)
+	scale.SetLength(100)
+	scale.SetValue(0)
+
+	spin.OnCommand(func() {
+		scale.SetValue(spin.Value())
+	})
+	scale.OnCommand(func() {
+		value := math.Round(scale.Value())
+		spin.SetValue(value)
+		spinInfo.SetText(fmt.Sprintf("%v", value))
+	})
+
+	hbox5.AddWidgets(spin, scale, tk.NewLayoutSpacer(w, 0, true), spinInfo)
+
 	vbox := tk.NewVPackLayout(w)
 	vbox.AddWidget(hbox1)
 	vbox.AddWidget(hbox2)
 	vbox.AddWidget(hbox3)
 	vbox.AddWidget(hbox4)
+	vbox.AddWidget(tk.NewSeparator(w, tk.Horizontal), tk.PackAttrFillX(), tk.PackAttrExpand(true))
+	vbox.AddWidget(hbox5)
 
 	vbox.SetBorderWidth(10)
 
