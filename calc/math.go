@@ -31,6 +31,7 @@ func (m *MathEval) RegistrFunc1(name string, fn func(float64) float64) {
 func (m *MathEval) Eval(express string) (string, error) {
 	re := regexp.MustCompile("([\\d\\.]+)([a-zπ]+)")
 	express = strings.ToLower(express)
+	express = strings.Replace(express, " ", "", -1)
 	express = re.ReplaceAllStringFunc(express, func(s string) string {
 		ar := re.FindStringSubmatch(s)
 		if ar[2] == "e" {

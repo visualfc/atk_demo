@@ -25,7 +25,7 @@ type MainWindow struct {
 	edit    *tk.Entry // 计算输入
 	eval    *MathEval // 数学计算
 	cflag   int       // 0:输入状态 1:完成计算 2:切换算式/结果
-	express string    // 计算输入存储
+	express string    // 计算表达式存储
 	result  string    // 计算结果存储
 }
 
@@ -49,7 +49,7 @@ func (w *MainWindow) Equals() {
 		}
 		express = express[:pos]
 	}
-	express = strings.TrimSpace(express)
+	express = strings.Replace(express, " ", "", -1)
 	if len(express) == 0 {
 		return
 	}
