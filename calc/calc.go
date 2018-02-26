@@ -74,6 +74,7 @@ func (w *MainWindow) inputSymbol(s string) {
 	switch s {
 	case "C":
 		w.edit.SetText("")
+		w.cflag = 2
 	case "⇦":
 		w.edit.Delete(w.edit.CursorPosition() - 1)
 	case "=":
