@@ -19,7 +19,7 @@ func init() {
 			os.Chdir(dir)
 		}
 		tcl_lib := filepath.Join(dir, "lib", "tcl8.6")
-		if _, err := os.Lstat(tcl_lib); err != nil {
+		if _, err := os.Lstat(tcl_lib); err == nil {
 			tk.InitEx(tcl_lib, "")
 		}
 	}
