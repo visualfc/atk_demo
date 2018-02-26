@@ -5,31 +5,11 @@ package main
 import (
 	"fmt"
 	"math"
-	"os"
-	"path/filepath"
-	"runtime"
 	"strings"
 	"unicode/utf8"
 
 	"github.com/visualfc/atk/tk"
 )
-
-func init() {
-	if runtime.GOOS == "windows" {
-		dir, _ := filepath.Split(os.Args[0])
-		if !filepath.IsAbs(dir) {
-			root, err := os.Getwd()
-			if err == nil {
-				dir = filepath.Join(root, dir)
-			}
-			os.Chdir(dir)
-		}
-		tcl_lib := filepath.Join(dir, "lib", "tcl8.6")
-		if _, err := os.Lstat(tcl_lib); err != nil {
-			tk.InitEx(tcl_lib, "")
-		}
-	}
-}
 
 func main() {
 	tk.MainLoop(func() {
@@ -180,11 +160,4 @@ func NewWindow() *MainWindow {
 		return math.Cbrt(v)
 	})
 	return mw
-}
-
-func bestFont() string {
-	if runtime.GOOS == "windows" {
-		return "Times"
-	}
-	return ""
 }
