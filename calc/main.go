@@ -5,12 +5,26 @@ package main
 import (
 	"fmt"
 	"math"
+	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"unicode/utf8"
 
 	"github.com/visualfc/atk/tk"
 )
+
+func init() {
+	dir, _ := filepath.Split(os.Args[0])
+	if !filepath.IsAbs(dir) {
+		root, err := os.Getwd()
+		if err == nil {
+			dir = filepath.Join(root, dir)
+		}
+		os.Chdir(dir)
+	}
+	tk.InitEx(filepath.Join(dir, "lib", "tcl8.6"), "")
+}
 
 func main() {
 	tk.MainLoop(func() {
