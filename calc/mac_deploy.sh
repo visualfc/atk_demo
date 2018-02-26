@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm -r -f calc.app
 mkdir -p calc.app/Contents/Frameworks
 mkdir -p calc.app/Contents/MacOS
 mkdir -p calc.app/Contents/Resources
@@ -10,9 +11,9 @@ otool -L calc.app/Contents/MacOS/calc
 
 cp rc/Info.plist calc.app/Contents
 cp rc/PkgInfo calc.app/Contents
-cp rc/calc.icns calc.app/Contents/MacOS/Frameworks
-cp -r /Library/Frameworks/Tcl.framework calc.app/Contents/Frameworks
-cp -r /Library/Frameworks/Tk.framework calc.app/Contents/Frameworks
+cp rc/calc.icns calc.app/Contents/Resources
+cp -p -R /Library/Frameworks/Tcl.framework calc.app/Contents/Frameworks
+cp -p -R /Library/Frameworks/Tk.framework calc.app/Contents/Frameworks
 
 install_name_tool -change /Library/Frameworks/Tcl.framework/Versions/8.6/Tcl \
     @executable_path/../Frameworks/Tcl.framework/Versions/8.6/Tcl \
