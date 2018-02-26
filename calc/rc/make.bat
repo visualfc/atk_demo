@@ -1,0 +1,1 @@
+windres app.rc -o ../app.syso
