@@ -4,7 +4,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"strings"
 	"unicode/utf8"
 
@@ -154,10 +153,10 @@ func NewWindow() *MainWindow {
 		return v * v * v
 	})
 	mw.eval.RegistrFunc1("sqrt", func(v float64) float64 {
-		return math.Sqrt(v)
+		return Sqrt(v)
 	})
 	mw.eval.RegistrFunc1("cbrt", func(v float64) float64 {
-		return math.Cbrt(v)
+		return Cbrt(v)
 	})
 	return mw
 }

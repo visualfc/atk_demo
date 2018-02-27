@@ -51,6 +51,45 @@ func (m *MathEval) Eval(express string) (string, error) {
 	return fmt.Sprintf("%v", v), nil
 }
 
+/*
+用牛顿法实现平方根函数。
+计算机通常使用循环来计算 x 的平方根。从某个猜测的值 z 开始，
+我们可以根据 z² 与 x 的近似度来调整 z，产生一个更好的猜测：
+z -= (z*z - x) / (2*z)
+重复调整的过程，猜测的结果会越来越精确，得到的答案也会尽可能接近实际的平方根。
+*/
+
+func Abs(x float64) float64 {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func Sqrt(x float64) float64 {
+	z := 1.0
+	for {
+		d := (z*z - x) / (2 * z)
+		z -= d
+		if Abs(d) < 1e-9 {
+			break
+		}
+	}
+	return z
+}
+
+func Cbrt(x float64) float64 {
+	z := 1.0
+	for {
+		d := (z*z*z - x) / (3 * z * z)
+		z -= d
+		if Abs(d) < 1e-9 {
+			break
+		}
+	}
+	return z
+}
+
 func NewMathEval() *MathEval {
 	return &MathEval{}
 }
