@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math"
 	"regexp"
 	"strconv"
 	"strings"
@@ -70,6 +71,12 @@ func Abs(x float64) float64 {
 
 //求平方根
 func Sqrt(x float64) float64 {
+	switch {
+	case x == 0 || math.IsNaN(x) || math.IsInf(x, 1):
+		return x
+	case x < 0:
+		return math.NaN()
+	}
 	z := 1.0
 	for {
 		d := (z*z - x) / (2 * z)
@@ -83,6 +90,10 @@ func Sqrt(x float64) float64 {
 
 //求立方根
 func Cbrt(x float64) float64 {
+	switch {
+	case x == 0 || math.IsNaN(x) || math.IsInf(x, 0):
+		return x
+	}
 	z := 1.0
 	for {
 		d := (z*z*z - x) / (3 * z * z)
