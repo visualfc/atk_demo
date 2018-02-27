@@ -47,7 +47,6 @@ func (m *MathEval) Eval(express string) (string, error) {
 	})
 	err := m.ql.SafeEval(express)
 	if err != nil || qret == nil {
-		fmt.Println(err)
 		return "无效", err
 	}
 	if v, ok := qret.(int); ok {
