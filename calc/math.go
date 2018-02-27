@@ -28,6 +28,7 @@ func (m *MathEval) RegistrFunc1(name string, fn func(float64) float64) {
 	})
 }
 
+//对数学表达式求值
 func (m *MathEval) Eval(express string) (string, error) {
 	re := regexp.MustCompile("([\\d\\.]+)([a-zπ]+)")
 	express = strings.ToLower(express)
@@ -39,14 +40,14 @@ func (m *MathEval) Eval(express string) (string, error) {
 		}
 		return ar[1] + "*" + ar[2]
 	})
-	express = strings.NewReplacer("π", "3.14159265", "pi", "3.14159265", "%", "/100", "×", "*", "x", "*", "÷", "/").Replace(express)
+	express = strings.NewReplacer("π", "3.141592653589793", "pi", "3.141592653589793", "%", "/100", "×", "*", "x", "*", "÷", "/").Replace(express)
 	r, err := tk.MainInterp().EvalAsString(fmt.Sprintf("expr [string map {/ *1.0/} %v]", express))
 	v, err := strconv.ParseFloat(r, 0)
 	if err != nil {
 		return "无效", err
 	}
-	if v > 1e-15 {
-		v, _ = strconv.ParseFloat(fmt.Sprintf("%.15f", v), 0)
+	if Abs(v) > 1e-9 {
+		v, _ = strconv.ParseFloat(fmt.Sprintf("%.9f", v), 0)
 	}
 	return fmt.Sprintf("%v", v), nil
 }
@@ -59,6 +60,7 @@ z -= (z*z - x) / (2*z)
 重复调整的过程，猜测的结果会越来越精确，得到的答案也会尽可能接近实际的平方根。
 */
 
+//绝对值
 func Abs(x float64) float64 {
 	if x < 0 {
 		return -x
@@ -66,6 +68,7 @@ func Abs(x float64) float64 {
 	return x
 }
 
+//求平方根
 func Sqrt(x float64) float64 {
 	z := 1.0
 	for {
@@ -78,6 +81,7 @@ func Sqrt(x float64) float64 {
 	return z
 }
 
+//求立方根
 func Cbrt(x float64) float64 {
 	z := 1.0
 	for {

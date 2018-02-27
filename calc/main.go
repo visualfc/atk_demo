@@ -19,6 +19,7 @@ func main() {
 	})
 }
 
+// 主窗口
 type MainWindow struct {
 	*tk.Window
 	edit    *tk.Entry // 计算输入
@@ -28,8 +29,7 @@ type MainWindow struct {
 	result  string    // 计算结果存储
 }
 
-//计算结果并显示计算式和得数
-//如果完成计算继续按回车则只显示得数
+//计算，保存表达式和结果
 func (w *MainWindow) Equals() {
 	if w.cflag == 2 {
 		w.edit.SetText(fmt.Sprintf("%v = %v", w.express, w.result))
@@ -65,6 +65,7 @@ func (w *MainWindow) Equals() {
 	}
 }
 
+// 输入
 func (w *MainWindow) inputSymbol(s string) {
 	w.edit.SetFocus()
 	switch s {
@@ -145,6 +146,7 @@ func NewWindow() *MainWindow {
 	grid.SetRowAttr(-1, 0, 1, "")
 	grid.SetBorderWidth(5)
 
+	//注册自定义计算函数
 	mw.eval = NewMathEval()
 	mw.eval.RegistrFunc1("pow2", func(v float64) float64 {
 		return v * v
