@@ -1,8 +1,6 @@
 package main
 
-import (
-	"github.com/visualfc/atk/tk"
-)
+import "github.com/visualfc/atk/tk"
 
 func main() {
 	tk.MainLoop(func() {

@@ -74,7 +74,8 @@ func main() {
 		sub.AddSeparator()
 		sub.AddActions(ag.Actions())
 
-		mw.Center().SetSizeN(400, 300)
+		mw.Center()
+		mw.SetSizeN(400, 300)
 		mw.ShowNormal()
 
 		fmt.Println(tk.DumpWidget(mw))
