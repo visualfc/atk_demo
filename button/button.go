@@ -116,6 +116,10 @@ func NewWindow() *Window {
 	spin.OnCommand(func() {
 		scale.SetValue(spin.Value())
 	})
+	spin.Entry().OnEditReturn(func() {
+		scale.SetValue(spin.Value())
+		spinInfo.SetText(spin.TextValue())
+	})
 	scale.OnCommand(func() {
 		value := math.Round(scale.Value())
 		spin.SetValue(value)

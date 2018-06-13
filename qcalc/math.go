@@ -9,7 +9,7 @@ import (
 
 	"qlang.io/cl/qlang"
 	_ "qlang.io/lib/builtin"
-	qmath "qlang.io/qlang/math"
+	qmath "qlang.io/lib/math"
 	"qlang.io/spec"
 )
 

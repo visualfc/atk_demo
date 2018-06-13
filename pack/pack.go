@@ -15,7 +15,7 @@ func main() {
 		lbl := tk.NewLabel(mw, "Label")
 		btn := tk.NewButton(mw, "Button")
 		frm := tk.NewFrame(mw)
-		frm.SetBorderStyle(tk.BorderStyleGroove)
+		frm.SetReliefStyle(tk.ReliefStyleFlat)
 		frm.SetBorderWidth(5)
 		lbl2 := tk.NewLabel(mw, "lable2")
 

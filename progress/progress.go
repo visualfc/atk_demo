@@ -19,15 +19,17 @@ func NewWindow() *Window {
 	btnStart := tk.NewButton(mw, "Start")
 	btnStop := tk.NewButton(mw, "stop")
 	btnStart.OnCommand(func() {
-		info.StartEx(100)
+		//info.StartEx(1e9)
+		info.Start()
 	})
 	info.SetMaximum(100)
+	info.SetValue(10)
 	btnStop.OnCommand(func() {
 		//info.Pause()
 		info.Stop()
 	})
-	info.SetStep(0.01)
-	info.SetDeterminateMode(true)
+	//info.SetStep(0.01)
+	//info.SetDeterminateMode(false)
 	fmt.Println(info.IsDeterminateMode())
 	//	go func() {
 	//		tick := time.Tick(1e6)
