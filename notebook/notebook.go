@@ -1,6 +1,10 @@
 package main
 
-import "github.com/visualfc/atk/tk"
+import (
+	"log"
+
+	"github.com/visualfc/atk/tk"
+)
 
 func main() {
 	tk.MainLoop(func() {
@@ -34,6 +38,15 @@ func NewWindow() *Window {
 	mw.tab.AddTab(page3, "page3")
 	mw.tab.SetTab(page2, "page2-change")
 	mw.tab.SetCurrentTab(page1)
+
+	pane4 := tk.NewLabel(mw, "Image")
+	img, err := tk.LoadImage(tk.TkLibrary() + "/images/pwrdLogo200.gif")
+	if err != nil {
+		log.Println(err)
+	}
+	pane4.SetImage(img)
+
+	mw.tab.AddTab(pane4, "page4")
 
 	vbox := tk.NewVPackLayout(mw)
 	vbox.AddWidgetEx(mw.tab, tk.FillBoth, true, 0)
