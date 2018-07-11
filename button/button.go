@@ -28,7 +28,6 @@ func NewWindow() *Window {
 
 	hbox1 := tk.NewHPackLayout(w)
 	hbox1.AddWidgets(btn1, btn2, btn3, tk.NewLayoutSpacer(w, 0, true), btnInfo)
-
 	//check
 	chk1 := tk.NewCheckButton(w, "Check1")
 	chk2 := tk.NewCheckButton(w, "Check2")
