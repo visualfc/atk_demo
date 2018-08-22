@@ -23,7 +23,9 @@ func NewWindow() *Window {
 		btnInfo.SetText(btn.Text())
 	}
 	btn1.OnCommand(func() { fninfo(btn1) })
-	btn2.OnCommand(func() { fninfo(btn2) })
+	btn2.OnCommand(func() {
+		fninfo(btn2)
+	})
 	btn3.OnCommand(func() { fninfo(btn3) })
 
 	hbox1 := tk.NewHPackLayout(w)

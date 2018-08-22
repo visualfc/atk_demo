@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/visualfc/atk/tk"
 )
@@ -30,22 +31,28 @@ func NewWindow() *Window {
 	})
 	//info.SetStep(0.01)
 	//info.SetDeterminateMode(false)
-	fmt.Println(info.IsDeterminateMode())
-	//	go func() {
-	//		tick := time.Tick(1e6)
-	//		last := info.Phase()
-	//		for {
-	//			select {
-	//			case <-tick:
-	//				tk.Async(func() {
-	//					if last != info.Phase() {
-	//						last = info.Phase()
-	//						fmt.Println(last)
-	//					}
-	//				})
-	//			}
-	//		}
-	//	}()
+	tick := time.NewTicker(1e6)
+	quit := make(chan bool)
+	go func() {
+		var last int
+		for {
+			select {
+			case <-tick.C:
+				tk.Async(func() {
+					if last != info.Phase() {
+						last = info.Phase()
+						mw.SetTitle(fmt.Sprintf("%d-%v", last, info.Value()))
+					}
+				})
+			case <-quit:
+				return
+			}
+		}
+	}()
+	mw.OnClose(func() bool {
+		quit <- true
+		return true
+	})
 	vpk.AddWidget(info, tk.PackAttrFillX())
 	vpk.AddWidget(btnStart)
 	vpk.AddWidget(btnStop)

@@ -10,45 +10,15 @@ type Window struct {
 	*tk.Window
 }
 
-type Base struct {
-	id string
-}
-
-func (b *Base) Id() string {
-	return b.id
-}
-
-type M1 struct {
-	Base
-}
-
-type M2 struct {
-	Base
-}
-
-func (m *M2) Id() string {
-	return m.id
-}
-
-type My struct {
-	*M1
-	*M2
-}
-
 func NewWindow() *Window {
-
-	m := &My{&M1{Base{"m1"}}, &M2{Base{"m2"}}}
-	fmt.Println(m.Id())
-
 	mw := tk.MainWindow()
-
 	//	paned := tk.NewPaned(mw, tk.Vertical)
 	//, tk.WidgetAttrInitUseTheme(false))
 	lst := tk.NewListBoxEx(mw)
 	//lst.ShowXScrollBar(false)
 
 	var items []string
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 1000; i++ {
 		items = append(items, fmt.Sprintf("%v-123456789-123456789-123456789", i))
 	}
 	lst.SetItems(items)
