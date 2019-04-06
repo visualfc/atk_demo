@@ -15,7 +15,7 @@ type Window struct {
 
 func NewWindow() *Window {
 	mw := &Window{}
-	mw.Window = tk.MainWindow()
+	mw.Window = tk.RootWindow()
 	mw.keyLabel = tk.NewLabel(mw, "keyboard")
 	mw.posLabel = tk.NewLabel(mw, "pos")
 	mw.keyLabel.SetFont(tk.NewUserFont("", 24))

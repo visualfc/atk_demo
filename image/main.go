@@ -12,7 +12,7 @@ func main() {
 	}
 
 	tk.MainLoop(func() {
-		mw := tk.MainWindow()
+		mw := tk.RootWindow()
 		mw.SetTitle("Go Tk")
 		mw.ShowNormal()
 
@@ -21,8 +21,12 @@ func main() {
 			log.Println(err)
 		} else {
 			lbl := tk.NewLabel(mw, "Image")
-			lbl.SetImage(img)
-			tk.NewVPackLayout(mw).AddWidget(lbl)
+			lbl.SetText("Image")
+			btn := tk.NewButton(mw, "Btn")
+			btn.OnCommand(func() {
+				lbl.SetImage(img)
+			})
+			tk.NewVPackLayout(mw).AddWidgetList([]tk.Widget{btn, lbl})
 			mw.SetSize(img.Size())
 		}
 	})

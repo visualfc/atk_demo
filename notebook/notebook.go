@@ -22,7 +22,7 @@ type Window struct {
 
 func NewWindow() *Window {
 	mw := &Window{}
-	mw.Window = tk.MainWindow()
+	mw.Window = tk.RootWindow()
 	mw.tab = tk.NewNotebook(mw)
 
 	page1 := tk.NewButton(mw, "OK1")

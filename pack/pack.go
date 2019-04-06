@@ -8,7 +8,7 @@ import (
 
 func main() {
 	tk.MainLoop(func() {
-		mw := tk.MainWindow()
+		mw := tk.RootWindow()
 		hbox := tk.NewHPackLayout(mw)
 		vbox := tk.NewVPackLayout(mw)
 

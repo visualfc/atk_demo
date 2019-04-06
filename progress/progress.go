@@ -13,7 +13,7 @@ type Window struct {
 
 func NewWindow() *Window {
 	mw := &Window{}
-	mw.Window = tk.MainWindow()
+	mw.Window = tk.RootWindow()
 	info := tk.NewProgressBar(mw, tk.Horizontal)
 	//info.SetLength(200)
 	vpk := tk.NewVPackLayout(mw)

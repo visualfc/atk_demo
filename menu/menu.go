@@ -8,7 +8,7 @@ import (
 
 func main() {
 	tk.MainLoop(func() {
-		mw := tk.MainWindow()
+		mw := tk.RootWindow()
 
 		mbar := tk.NewMenu(mw)
 		mw.SetMenu(mbar)

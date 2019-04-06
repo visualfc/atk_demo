@@ -13,7 +13,7 @@ type Window struct {
 }
 
 func NewWindow() *Window {
-	w := tk.MainWindow()
+	w := tk.RootWindow()
 	//button
 	btn1 := tk.NewButton(w, "Button1")
 	btn2 := tk.NewButton(w, "Button2")
@@ -100,11 +100,11 @@ func NewWindow() *Window {
 	hbox5 := tk.NewHPackLayout(w)
 	spin := tk.NewSpinBox(w)
 	spinInfo := tk.NewLabel(w, "")
-	spin.SetFrom(0)
-	spin.SetTo(100)
+	spin.SetRange(1, 100)
 	spin.Entry().SetWidth(5)
 
 	spin.OnCommand(func() {
+		tk.Update()
 		spinInfo.SetText(spin.TextValue())
 	})
 
@@ -127,7 +127,7 @@ func NewWindow() *Window {
 		spinInfo.SetText(fmt.Sprintf("%v", value))
 	})
 
-	hbox5.AddWidgets(spin, scale, tk.NewLayoutSpacer(w, 0, true), spinInfo)
+	hbox5.AddWidgets(spin, scale, tk.NewLayoutSpacer(w, 0, false), spinInfo)
 
 	vbox := tk.NewVPackLayout(w)
 	vbox.AddWidget(hbox1)

@@ -18,7 +18,7 @@ type Window struct {
 }
 
 func NewWindow() *Window {
-	mw := tk.MainWindow()
+	mw := tk.RootWindow()
 
 	font := tk.NewUserFont("", 36)
 	info := tk.NewLabel(mw, "Hello, 中国")

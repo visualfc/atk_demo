@@ -12,7 +12,7 @@ type M struct {
 
 func main() {
 	tk.MainLoop(func() {
-		mw := tk.MainWindow()
+		mw := tk.RootWindow()
 		grid := tk.NewGridLayout(mw)
 		vbox := tk.NewVPackLayout(mw)
 		//		vpk := tk.NewVPackLayout(mw)

@@ -105,7 +105,7 @@ var (
 
 func NewWindow() *MainWindow {
 	mw := &MainWindow{}
-	mw.Window = tk.MainWindow()
+	mw.Window = tk.RootWindow()
 	font := tk.NewUserFont(bestFont(), 16).SetBold(true)
 	mw.edit = tk.NewEntry(mw)
 	mw.edit.SetFont(font)

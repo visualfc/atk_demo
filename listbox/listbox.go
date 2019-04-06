@@ -11,7 +11,7 @@ type Window struct {
 }
 
 func NewWindow() *Window {
-	mw := tk.MainWindow()
+	mw := tk.RootWindow()
 	//	paned := tk.NewPaned(mw, tk.Vertical)
 	//, tk.WidgetAttrInitUseTheme(false))
 	lst := tk.NewListBoxEx(mw)

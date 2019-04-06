@@ -139,7 +139,7 @@ var (
 
 func NewWindow() *MainWindow {
 	mw := &MainWindow{}
-	mw.Window = tk.MainWindow()
+	mw.Window = tk.RootWindow()
 
 	font := tk.LoadSysFont(tk.SysTextFont).Clone()
 	font.SetSize(24).SetBold(true)
