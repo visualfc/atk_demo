@@ -9,7 +9,7 @@ import (
 func main() {
 	tk.MainLoop(func() {
 		mw := NewWindow()
-		mw.Center()
+		mw.Center(nil)
 		mw.ResizeN(400, 300)
 		mw.ShowNormal()
 	})

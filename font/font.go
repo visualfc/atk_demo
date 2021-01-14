@@ -110,7 +110,7 @@ func main() {
 		mw := NewWindow()
 		mw.SetTitle("ATK Font Demo")
 		mw.ResizeN(400, 300)
-		mw.Center()
+		mw.Center(nil)
 		mw.ShowNormal()
 	})
 }

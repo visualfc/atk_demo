@@ -86,7 +86,7 @@ tk.NewActionGroup //radio action group
 		vpk.InsertWidget(0, info)
 
 		mw.SetTitle("Menu Demo")
-		mw.Center()
+		mw.Center(nil)
 		mw.ShowNormal()
 	})
 }

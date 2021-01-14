@@ -54,7 +54,7 @@ func main() {
 		mw := NewWindow()
 		mw.SetTitle("ATK Keyboard Demo")
 		mw.SetSizeN(400, 300)
-		mw.Center()
+		mw.Center(nil)
 		mw.ShowNormal()
 	})
 }

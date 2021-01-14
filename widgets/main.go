@@ -57,7 +57,7 @@ func main() {
 		sub.AddSeparator()
 		sub.AddActions(ag.Actions())
 
-		mw.Center()
+		mw.Center(nil)
 		mw.SetSizeN(400, 300)
 		mw.ShowNormal()
 

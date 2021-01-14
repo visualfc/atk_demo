@@ -34,7 +34,7 @@ func main() {
 		vbox.SetBorderWidth(10)
 		vbox.SetPaddingN(10, 10)
 		vbox.Repack()
-		mw.Center()
+		mw.Center(nil)
 		mw.ShowNormal()
 		fmt.Println(tk.DumpWidget(mw))
 	})

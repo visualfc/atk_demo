@@ -24,7 +24,7 @@ func main() {
 	tk.MainLoop(func() {
 		mw := NewWindow()
 		mw.SetTitle("ATK Sample")
-		mw.Center()
+		mw.Center(nil)
 		mw.ShowNormal()
 	})
 }

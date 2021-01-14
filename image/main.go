@@ -30,7 +30,7 @@ func main() {
 			tk.NewVPackLayout(mw).AddWidgets(btn, lbl)
 			mw.SetSizeN(img.Size().Width, img.Size().Height+20)
 		}
-		mw.Center()
+		mw.Center(nil)
 		mw.ShowNormal()
 	})
 }

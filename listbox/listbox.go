@@ -44,7 +44,7 @@ func NewWindow() *Window {
 func main() {
 	tk.MainLoop(func() {
 		w := NewWindow()
-		w.Center()
+		w.Center(nil)
 		w.ResizeN(300, 300)
 		w.ShowNormal()
 	})
