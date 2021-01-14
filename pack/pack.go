@@ -31,7 +31,6 @@ func main() {
 		hbox3.AddWidget(tk.NewButton(frm, "OK2"))
 		hbox3.SetPaddingN(10, 10)
 
-		//vbox.Master().(*tk.LayoutFrame).SetPaddingN(10, 10)
 		vbox.SetBorderWidth(10)
 		vbox.SetPaddingN(10, 10)
 		vbox.Repack()

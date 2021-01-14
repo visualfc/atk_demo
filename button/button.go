@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"strings"
 
@@ -99,19 +98,12 @@ func NewWindow() *Window {
 
 	hbox5 := tk.NewHPackLayout(w)
 	spin := tk.NewSpinBox(w)
-	spinInfo := tk.NewLabel(w, "")
-	spin.SetRange(1, 100)
+	spin.SetRange(0, 100)
+	spin.SetValue(0)
 	spin.Entry().SetWidth(5)
 
-	spin.OnCommand(func() {
-		tk.Update()
-		spinInfo.SetText(spin.TextValue())
-	})
-
 	scale := tk.NewScale(w, tk.Horizontal)
-	scale.SetFrom(0)
-	scale.SetTo(100)
-	scale.SetLength(100)
+	scale.SetRange(0, 100)
 	scale.SetValue(0)
 
 	spin.OnCommand(func() {
@@ -119,15 +111,14 @@ func NewWindow() *Window {
 	})
 	spin.Entry().OnEditReturn(func() {
 		scale.SetValue(spin.Value())
-		spinInfo.SetText(spin.TextValue())
 	})
 	scale.OnCommand(func() {
 		value := math.Round(scale.Value())
 		spin.SetValue(value)
-		spinInfo.SetText(fmt.Sprintf("%v", value))
 	})
 
-	hbox5.AddWidgets(spin, scale, tk.NewLayoutSpacer(w, 0, false), spinInfo)
+	hbox5.AddWidget(spin)
+	hbox5.AddWidget(scale, tk.PackAttrFillX(), tk.PackAttrExpand(true))
 
 	vbox := tk.NewVPackLayout(w)
 	vbox.AddWidget(hbox1)
@@ -146,7 +137,7 @@ func main() {
 	tk.MainLoop(func() {
 		w := NewWindow()
 		w.SetTitle("ATK Button Demo")
-		w.Center()
+		w.Center(nil)
 		w.ResizeN(400, 300)
 		w.ShowNormal()
 	})
