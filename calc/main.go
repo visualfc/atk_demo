@@ -148,16 +148,16 @@ func NewWindow() *MainWindow {
 
 	//注册自定义计算函数
 	mw.eval = NewMathEval()
-	mw.eval.RegistrFunc1("pow2", func(v float64) float64 {
+	mw.eval.RegisterFunc1("pow2", func(v float64) float64 {
 		return v * v
 	})
-	mw.eval.RegistrFunc1("pow3", func(v float64) float64 {
+	mw.eval.RegisterFunc1("pow3", func(v float64) float64 {
 		return v * v * v
 	})
-	mw.eval.RegistrFunc1("sqrt", func(v float64) float64 {
+	mw.eval.RegisterFunc1("sqrt", func(v float64) float64 {
 		return Sqrt(v)
 	})
-	mw.eval.RegistrFunc1("cbrt", func(v float64) float64 {
+	mw.eval.RegisterFunc1("cbrt", func(v float64) float64 {
 		return Cbrt(v)
 	})
 	return mw

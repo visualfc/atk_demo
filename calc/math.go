@@ -16,7 +16,7 @@ type MathEval struct {
 }
 
 //注册一个参数的计算函数, 如 pow2 => pow2(10)
-func (m *MathEval) RegistrFunc1(name string, fn func(float64) float64) {
+func (m *MathEval) RegisterFunc1(name string, fn func(float64) float64) {
 	tk.MainInterp().CreateCommand("tcl::mathfunc::"+name, func(args []string) (string, error) {
 		if len(args) != 1 {
 			return "", errors.New("Invalid param")
