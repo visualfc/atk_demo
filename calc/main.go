@@ -29,7 +29,7 @@ type MainWindow struct {
 	result  string    // 计算结果存储
 }
 
-//计算，保存表达式和结果
+// 计算，保存表达式和结果
 func (w *MainWindow) Equals() {
 	if w.cflag == 2 {
 		w.edit.SetText(fmt.Sprintf("%v = %v", w.express, w.result))
@@ -106,7 +106,8 @@ var (
 func NewWindow() *MainWindow {
 	mw := &MainWindow{}
 	mw.Window = tk.RootWindow()
-	font := tk.NewUserFont(bestFont(), 16).SetBold(true)
+	font := tk.NewUserFont(bestFont(), 16)
+	font.SetBold(true)
 	mw.edit = tk.NewEntry(mw)
 	mw.edit.SetFont(font)
 	mw.edit.SetJustify(tk.JustifyRight)
